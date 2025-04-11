@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>AjudaSolidária - Doações</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #111;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.3em;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      color: #002b5c;
+      margin-top: 0;
+      font-size: 1.8em;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    a {
+      color: #0056d2;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    form label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #0066ff;
+      color: white;
+      padding: 14px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #004cc9;
+    }
+
+    .doacao {
+      background: #f1f8ff;
+      border: 1px solid #cce5ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      font-size: 0.95em;
+    }
+
+    .usuario-logado {
+      text-align: right;
+      color: white;
+      padding: 10px 20px 0;
+      font-size: 0.95em;
+    }
+
+    .usuario-logado button {
+      margin-left: 10px;
+      background: #c00;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuarioLogado) {
+      alert("Você precisa estar logado para acessar esta página.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <header>
+    <h1>AjudaSolidária</h1>
+    <p>Plataforma de doações e impacto social</p>
+  </header>
+
+  <div class="usuario-logado">
+    Olá, <span id="nomeUsuario"></span>!
+    <button onclick="logout()">Sair</button>
+  </div>
+
+  <main>
+    <div class="card">
+      <h2>Qual a importância da doação?</h2>
+      <p>
+        A doação é um gesto de solidariedade que pode mudar vidas. Quando você doa, não está apenas oferecendo um bem material, mas também esperança e dignidade a quem precisa.
+      </p>
+      <p>
+        <strong>Doar sangue</strong> é uma das maneiras mais diretas de salvar vidas. Uma única doação pode beneficiar até quatro pessoas em situações de emergência. Para saber onde doar, visite
+        <a href="https://redome.inca.gov.br/campanhas/hemocentros-do-brasil/" target="_blank">esta página com hemocentros do Brasil</a>.
+      </p>
+      <p>
+        <strong>Adoção de animais</strong> é outra forma de doar: você oferece amor, cuidado e um novo lar a animais abandonados. Abrigos e ONGs dependem de adotantes responsáveis para continuar esse trabalho. Você pode adotar ou ajudar visitando
+        <a href="https://www.adotepetz.com.br/" target="_blank">Adote Petz</a>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Faça sua doação</h2>
+      <form id="formDoacao">
+        <label for="nome">Seu Nome:</label>
+        <input type="text" id="nome" placeholder="Digite seu nome" required>
+
+        <label for="tipo">Tipo de Doação:</label>
+        <select id="tipo" required>
+          <option value="">Selecione...</option>
+          <option value="Brinquedo">Brinquedo</option>
+          <option value="Roupa">Roupa</option>
+          <option value="Alimento">Alimento</option>
+          <option value="Material Escolar">Material Escolar</option>
+        </select>
+
+        <label for="cidade">Cidade:</label>
+        <select id="cidade" required>
+          <option value="">Selecione...</option>
+          <option value="São Paulo">São Paulo</option>
+          <option value="Rio de Janeiro">Rio de Janeiro</option>
+          <option value="Recife">Recife</option>
+          <option value="Belo Horizonte">Belo Horizonte</option>
+          <option value="Curitiba">Curitiba</option>
+        </select>
+
+        <label for="mensagem">Mensagem (opcional):</label>
+        <textarea id="mensagem" rows="3" placeholder="Deixe uma observação..."></textarea>
+
+        <button type="submit">Registrar Doação</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Doações Recebidas</h2>
+      <div id="listaDoacoes"></div>
+    </div>
+
+    <div class="card">
+      <p>
+        E se você quiser apoiar outras causas e fazer uma doação geral, acesse
+        <a href="https://doacoes.gov.br/" target="_blank">doacoes.gov.br</a>, uma plataforma oficial para apoio a várias iniciativas sociais em todo o Brasil.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 AjudaSolidária | Desenvolvido com 💙 por Pamela Rosa
+  </footer>
+
+  <script>
+    document.getElementById("nomeUsuario").innerText = usuarioLogado.nome;
+
+    function logout() {
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = "login.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("formDoacao");
+      const lista = document.getElementById("listaDoacoes");
+      let doacoes = JSON.parse(localStorage.getItem("doacoes")) || [];
+
+      function renderizarDoacoes() {
+        lista.innerHTML = "";
+        if (doacoes.length === 0) {
+          lista.innerHTML = "<p>Nenhuma doação registrada ainda.</p>";
+          return;
+        }
+
+        doacoes.forEach((d) => {
+          const div = document.createElement("div");
+          div.className = "doacao";
+          div.innerHTML = `
+            <p><strong>Nome:</strong> ${d.nome}</p>
+            <p><strong>Tipo:</strong> ${d.tipo}</p>
+            <p><strong>Cidade:</strong> ${d.cidade}</p>
+            ${d.mensagem ? `<p><strong>Mensagem:</strong> ${d.mensagem}</p>` : ""}
+            <p><em>Data:</em> ${d.data}</p>
+          `;
+          lista.appendChild(div);
+        });
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const nome = document.getElementById("nome").value.trim();
+        const tipo = document.getElementById("tipo").value;
+        const cidade = document.getElementById("cidade").value;
+        const mensagem = document.getElementById("mensagem").value.trim();
+        const data = new Date().toLocaleString();
+
+        if (!nome || !tipo || !cidade) {
+          alert("Preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const novaDoacao = { nome, tipo, cidade, mensagem, data };
+        doacoes.push(novaDoacao);
+        localStorage.setItem("doacoes", JSON.stringify(doacoes));
+
+        form.reset();
+        renderizarDoacoes();
+      });
+
+      renderizarDoacoes();
+    });
+  </script>
+</body>
+</html>
